@@ -48,6 +48,6 @@ class ConfigsBD:
             print("Erro inesperado", e)
             
 if __name__ == "__main__":
-    bdConfig = ConfigsBD(12)
+    bdConfig = ConfigsBD(50)
     bdConfig.inserirTodosResetar()
     

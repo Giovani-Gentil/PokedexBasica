@@ -1,13 +1,15 @@
 
 import requests
-import conexaosqlite
+import sqlite3
+from sqlite3 import Error
+
 
 class ConfigsBD:
     def __init__(self, ajustarLimiteDados:int):
         self.limite = ajustarLimiteDados
         try:
-            self.conn = conexaosqlite.conectar.conexaoBD()
-            self.cursor = self.conn.cursor()
+            self.conexao = sqlite3.connect(r'C:\Users\givij\Projetos\Projetos-Individuais\Programacao\Pokedex\pokemons.db')
+            self.cursor = self.conexao.cursor()
             self.pokemons = requests.get(f'https://pokeapi.co/api/v2/pokemon?limit={self.limite}&offset=0')
             
         except requests.exceptions.RequestException as e:
@@ -39,7 +41,7 @@ class ConfigsBD:
                 pokemon = self.pokemons.json()["results"][c]["name"]
                 print(c + 1, pokemon, "INSERIDO...")
                 self.cursor.execute(f'INSERT INTO TODOS (NOME) VALUES ("{pokemon}");')
-                self.conn.commit()
+                self.conexao.commit()
             print("INSERÇÃO COMPLETA")
         
         except requests.exceptions.RequestException as e:
@@ -48,6 +50,6 @@ class ConfigsBD:
             print("Erro inesperado", e)
             
 if __name__ == "__main__":
-    bdConfig = ConfigsBD(50)
+    bdConfig = ConfigsBD(100)
     bdConfig.inserirTodosResetar()
     

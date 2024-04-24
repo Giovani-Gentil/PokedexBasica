@@ -1,2 +1,0 @@
-preciso fazer a logica de perguntar se quer continuar
-preciso criar a logica das trocas de dados entre as tabelas
